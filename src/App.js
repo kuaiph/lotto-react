@@ -18,6 +18,19 @@ class App extends Component {
     const balance = await web3.eth.getBalance(lotto.options.address);
     this.setState({manager, players, balance});
   }
+
+  onSubmit = async (event) => {
+    event.preventDefault();
+
+    const accounts = await web3.eth.getAccounts();
+    await lotto.methods.enter().send({
+      from: accounts[0],
+      value: web3.utils.toWeir(this.state.value, 'ether')
+    });
+
+  }
+
+
   render() {
     // console.log(web3.version);
     web3.eth.getAccounts().then(console.log);
@@ -28,7 +41,7 @@ class App extends Component {
         </p>
         <hr />
 
-        <form>
+        <form onSubmit={this.onSubmit}>
           <h4>Want to try your Luck?</h4>
           <div>
             <label> Amount of ether to enter:</label>
