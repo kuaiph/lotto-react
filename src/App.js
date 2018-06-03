@@ -10,7 +10,8 @@ class App extends Component {
     mananger: '',
     players: [],
     balance: '',
-    value: ''
+    value: '',
+    message: ''
   }
   async componentDidMount(){
     const manager = await lotto.methods.manager().call();
@@ -23,11 +24,16 @@ class App extends Component {
     event.preventDefault();
 
     const accounts = await web3.eth.getAccounts();
+
+    this.setState({message: 'Waiting on transaction confirmation...'})
     await lotto.methods.enter().send({
       from: accounts[0],
-      value: web3.utils.toWeir(this.state.value, 'ether')
+      value: web3.utils.toWei(this.state.value, 'ether')
     });
 
+    this.setState({
+      message: 'Transaction Confirmed!'
+    });
   }
 
 
@@ -52,6 +58,9 @@ class App extends Component {
           </div>
           <button>Enter</button>
         </form>
+        <hr />
+
+        <h1>{this.state.message}</h1>
       </div>
     );
   }
