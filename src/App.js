@@ -9,7 +9,8 @@ class App extends Component {
   state = {
     mananger: '',
     players: [],
-    balance: ''
+    balance: '',
+    value: ''
   }
   async componentDidMount(){
     const manager = await lotto.methods.manager().call();
@@ -23,7 +24,21 @@ class App extends Component {
     return (
       <div>
         <h2>Lotto Contract</h2>
-        <p>This contract is managed by {this.state.manager}</p>
+        <p>This contract is managed by {this.state.manager}. There are currently {this.state.players.length} people entered competing to win {web3.utils.fromWei(this.state.balance, 'ether')} ether!
+        </p>
+        <hr />
+
+        <form>
+          <h4>Want to try your Luck?</h4>
+          <div>
+            <label> Amount of ether to enter:</label>
+            <input
+              value={this.state.value}
+              onChange={event => this.setState({value: event.target.value})}
+            />
+          </div>
+          <button>Enter</button>
+        </form>
       </div>
     );
   }
