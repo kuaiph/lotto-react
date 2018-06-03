@@ -36,6 +36,22 @@ class App extends Component {
     });
   }
 
+  onClick = async () =>{
+    event.preventDefault();
+
+    const accounts = await web3.eth.getAccounts();
+
+    this.setState({message: 'Waiting on transaction confirmation...'});
+
+    await lotto.methods.pickWinner().send({
+      from: accounts[0]
+    });
+
+    this.setState({
+      message: 'A Winner has been chosen!'
+    });
+  }
+
 
   render() {
     // console.log(web3.version);
@@ -58,6 +74,11 @@ class App extends Component {
           </div>
           <button>Enter</button>
         </form>
+        <hr />
+
+          <h4>Ready to choose a winner?</h4>
+          <button onClick={this.onClick}>Choose a Winner!</button>
+
         <hr />
 
         <h1>{this.state.message}</h1>
