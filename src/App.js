@@ -37,8 +37,6 @@ class App extends Component {
   }
 
   onClick = async () =>{
-    event.preventDefault();
-
     const accounts = await web3.eth.getAccounts();
 
     this.setState({message: 'Waiting on transaction confirmation...'});
