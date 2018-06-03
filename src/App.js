@@ -7,11 +7,15 @@ import lotto from './lotto';
 
 class App extends Component {
   state = {
-    mananger: ''
+    mananger: '',
+    players: [],
+    balance: ''
   }
   async componentDidMount(){
     const manager = await lotto.methods.manager().call();
-    this.setState({manager});
+    const players = await lotto.methods.getPlayers().call();
+    const balance = await web3.eth.getBalance(lotto.options.address);
+    this.setState({manager, players, balance});
   }
   render() {
     // console.log(web3.version);
