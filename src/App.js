@@ -6,9 +6,8 @@ import lotto from './lotto';
 
 
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.state = {manager:''};
+  state = {
+    mananger: ''
   }
   async componentDidMount(){
     const manager = await lotto.methods.manager().call();
